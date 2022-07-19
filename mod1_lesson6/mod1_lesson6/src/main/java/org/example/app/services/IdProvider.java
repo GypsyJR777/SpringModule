@@ -1,7 +1,7 @@
 package org.example.app.services;
 
 import org.apache.log4j.Logger;
-import org.example.web.dto.Book;
+import org.example.web.entity.Book;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

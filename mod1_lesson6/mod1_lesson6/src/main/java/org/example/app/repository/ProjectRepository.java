@@ -1,4 +1,4 @@
-package org.example.app.services;
+package org.example.app.repository;
 
 import java.util.List;
 
@@ -8,4 +8,6 @@ public interface ProjectRepository<T> {
     void store(T book);
 
     boolean removeItemById(Integer bookIdToRemove);
+
+//    void removeByRegex(String queryRegex);
 }

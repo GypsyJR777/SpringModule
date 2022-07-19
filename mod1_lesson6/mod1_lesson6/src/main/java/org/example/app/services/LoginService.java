@@ -1,7 +1,7 @@
 package org.example.app.services;
 
 import org.apache.log4j.Logger;
-import org.example.web.dto.LoginForm;
+import org.example.web.entity.LoginForm;
 import org.springframework.stereotype.Service;
 
 @Service

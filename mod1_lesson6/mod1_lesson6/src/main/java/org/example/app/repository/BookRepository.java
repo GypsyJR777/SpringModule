@@ -1,7 +1,7 @@
-package org.example.app.services;
+package org.example.app.repository;
 
 import org.apache.log4j.Logger;
-import org.example.web.dto.Book;
+import org.example.web.entity.Book;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -59,6 +59,16 @@ public class BookRepository implements ProjectRepository<Book>, ApplicationConte
         logger.info("remove book completed");
         return true;
     }
+
+//    @Override
+//    public void removeByRegex(String queryRegex) {
+//        for (Book book : retreiveAll()) {
+//            if (book.getTitle().contains(queryRegex) || book.getAuthor().contains(queryRegex) ||
+//                    book.getSize().toString().contains(queryRegex)) {
+//                repo.remove(book);
+//            }
+//        }
+//    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

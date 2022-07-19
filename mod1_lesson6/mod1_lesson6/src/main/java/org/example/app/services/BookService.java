@@ -1,7 +1,8 @@
 package org.example.app.services;
 
 import org.apache.log4j.Logger;
-import org.example.web.dto.Book;
+import org.example.app.repository.ProjectRepository;
+import org.example.web.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

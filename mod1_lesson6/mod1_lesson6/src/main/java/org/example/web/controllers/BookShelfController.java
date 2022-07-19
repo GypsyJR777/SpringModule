@@ -1,11 +1,10 @@
 package org.example.web.controllers;
 
 import org.apache.log4j.Logger;
-import org.example.app.exceptions.BookShelfLoginException;
 import org.example.app.exceptions.EmptyFileException;
 import org.example.app.services.BookService;
-import org.example.web.dto.Book;
-import org.example.web.dto.BookIdToRemove;
+import org.example.web.entity.Book;
+import org.example.web.entity.BookIdToRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -57,6 +56,18 @@ public class BookShelfController {
 
     @PostMapping("/remove")
     public String removeBook(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("book", new Book());
+            model.addAttribute("bookList", bookService.getAllBooks());
+            return "book_shelf";
+        } else {
+            bookService.removeBookById(bookIdToRemove.getId());
+            return "redirect:/books/shelf";
+        }
+    }
+
+    @PostMapping("/removeByRegex")
+    public String removeBookByRegex(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("book", new Book());
             model.addAttribute("bookList", bookService.getAllBooks());
