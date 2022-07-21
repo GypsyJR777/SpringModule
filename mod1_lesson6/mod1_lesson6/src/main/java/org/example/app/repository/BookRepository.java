@@ -60,15 +60,27 @@ public class BookRepository implements ProjectRepository<Book>, ApplicationConte
         return true;
     }
 
-//    @Override
-//    public void removeByRegex(String queryRegex) {
-//        for (Book book : retreiveAll()) {
-//            if (book.getTitle().contains(queryRegex) || book.getAuthor().contains(queryRegex) ||
-//                    book.getSize().toString().contains(queryRegex)) {
-//                repo.remove(book);
-//            }
-//        }
-//    }
+    @Override
+    public boolean removeByRegex(String queryRegex) {
+        for (Book book : retreiveAll()) {
+            MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+            if (book.getTitle().contains(queryRegex)) {
+                parameterSource.addValue("regex", book.getTitle());
+                jdbcTemplate.update("DELETE FROM books WHERE title = :regex", parameterSource);
+                logger.info("remove book completed");
+
+                return true;
+            } else if (book.getAuthor().contains(queryRegex)) {
+                parameterSource.addValue("regex", book.getAuthor());
+                jdbcTemplate.update("DELETE FROM books WHERE author = :regex", parameterSource);
+                logger.info("remove book completed");
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

@@ -4,7 +4,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 public class Book {
-    @NotNull
     private Integer id;
     @NotNull
     private String author;

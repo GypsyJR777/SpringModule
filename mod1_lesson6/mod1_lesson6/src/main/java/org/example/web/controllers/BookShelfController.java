@@ -5,6 +5,7 @@ import org.example.app.exceptions.EmptyFileException;
 import org.example.app.services.BookService;
 import org.example.web.entity.Book;
 import org.example.web.entity.BookIdToRemove;
+import org.example.web.entity.BookRegexToRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class BookShelfController {
         logger.info(this.toString());
         model.addAttribute("book", new Book());
         model.addAttribute("bookIdToRemove", new BookIdToRemove());
+        model.addAttribute("bookRegexToRemove", new BookRegexToRemove());
         model.addAttribute("bookList", bookService.getAllBooks());
         return "book_shelf";
     }
@@ -43,8 +45,10 @@ public class BookShelfController {
     @PostMapping("/save")
     public String saveBook(@Valid Book book, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            logger.info(bindingResult.getAllErrors());
             model.addAttribute("book", book);
             model.addAttribute("bookIdToRemove", new BookIdToRemove());
+            model.addAttribute("bookRegexToRemove", new BookRegexToRemove());
             model.addAttribute("bookList", bookService.getAllBooks());
             return "book_shelf";
         } else {
@@ -67,13 +71,13 @@ public class BookShelfController {
     }
 
     @PostMapping("/removeByRegex")
-    public String removeBookByRegex(@Valid BookIdToRemove bookIdToRemove, BindingResult bindingResult, Model model) {
+    public String removeBookByRegex(@Valid BookRegexToRemove bookRegexToRemove, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("book", new Book());
             model.addAttribute("bookList", bookService.getAllBooks());
             return "book_shelf";
         } else {
-            bookService.removeBookById(bookIdToRemove.getId());
+            bookService.removeBookByRegex(bookRegexToRemove.getRegex());
             return "redirect:/books/shelf";
         }
     }
