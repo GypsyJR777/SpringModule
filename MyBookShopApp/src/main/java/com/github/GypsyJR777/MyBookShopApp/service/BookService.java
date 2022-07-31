@@ -1,5 +1,6 @@
 package com.github.GypsyJR777.MyBookShopApp.service;
 
+import com.github.GypsyJR777.MyBookShopApp.entity.Author;
 import com.github.GypsyJR777.MyBookShopApp.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,16 +21,22 @@ public class BookService {
     }
 
     public List<Book> getBooksData() {
-        List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rowNum) -> {
-            Book book = new Book();
-            book.setId(rs.getInt("id"));
-            book.setAuthor(rs.getString("author"));
-            book.setTitle(rs.getString("title"));
-            book.setPriceOld(rs.getString("priceOld"));
-            book.setPrice(rs.getString("price"));
+        List<Book> books = jdbcTemplate.query(
+                "SELECT b.*, a.author FROM BOOKS AS b, AUTHORS AS a WHERE b.AUTHORID = a.ID ",
+                (ResultSet rs, int rowNum) -> {
+                    Author author = new Author();
+                    Book book = new Book();
 
-            return book;
-        });
+                    author.setAuthor(rs.getString("author"));
+
+                    book.setId(rs.getInt("id"));
+                    book.setAuthor(author);
+                    book.setTitle(rs.getString("title"));
+                    book.setPriceOld(rs.getString("priceOld"));
+                    book.setPrice(rs.getString("price"));
+
+                    return book;
+                });
 
         return new ArrayList<>(books);
     }

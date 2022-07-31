@@ -1,5 +1,6 @@
 package com.github.GypsyJR777.MyBookShopApp.controller;
 
+import com.github.GypsyJR777.MyBookShopApp.service.AuthorService;
 import com.github.GypsyJR777.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,15 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/bookshop")
 public class MainPageController {
     private final BookService bookService;
+    private final AuthorService authorService;
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainPageController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @GetMapping("/main")
     public String mainPage(Model model) {
         model.addAttribute("bookData", bookService.getBooksData());
         return "index";
+    }
+
+    @GetMapping("/genres")
+    public String genresPage() {
+        return "genres/index";
+    }
+
+    @GetMapping("/authors")
+    public String authorsPage(Model model) {
+        model.addAttribute("authors", authorService.getMapAuthorsAndFirstLetters());
+        return "authors/index";
     }
 }
