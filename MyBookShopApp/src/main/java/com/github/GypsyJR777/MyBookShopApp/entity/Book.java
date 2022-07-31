@@ -2,7 +2,7 @@ package com.github.GypsyJR777.MyBookShopApp.entity;
 
 public class Book {
     private Integer id;
-    private String author;
+    private Author author;
     private String title;
     private String priceOld;
     private String price;
@@ -15,11 +15,11 @@ public class Book {
         this.id = id;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -51,7 +51,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", author='" + author + '\'' +
+                ", author='" + author.getAuthor() + '\'' +
                 ", title='" + title + '\'' +
                 ", priceOld='" + priceOld + '\'' +
                 ", price='" + price + '\'' +
